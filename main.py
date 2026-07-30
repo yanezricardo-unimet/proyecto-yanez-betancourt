@@ -1,4 +1,5 @@
 from App import App
+from API import API
 
 def main():
     """
@@ -7,4 +8,10 @@ def main():
     app = App()
     app.menu()
 
-main()
+# main()
+
+
+api = API()
+print("antes:", api.hayConexion())      # False
+print("conectar():", api.conectar())    # True si hay internet
+print("despues:", api.hayConexion())
