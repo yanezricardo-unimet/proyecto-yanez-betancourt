@@ -39,4 +39,30 @@ class API:
         return self.conectado
 
     def consultarClimaActual(self, latitud, longitud):
-        pass
+        """
+        Consulta el clima actual de una coordenada en Open-Meteo y devuelve un
+        objeto Clima con los datos. La respuesta de la API (un diccionario) se
+        transforma en el objeto; no se guarda como diccionario.
+
+        Args:
+            latitud (float): Latitud de la localidad.
+            longitud (float): Longitud de la localidad.
+
+        Returns:
+            Clima: Objeto con los datos del clima, o None si falla la consulta.
+        """
+        parametros = {
+            "latitude": latitud,
+            "longitude": longitud,
+            "current": "temperature_2m,relative_humidity_2m,wind_speed_10m,weather_code"
+        }
+        try:
+            response = requests.get(self.urlBase, params=parametros, timeout=5)
+            if response.status_code != 200:
+                return None
+            datos = response.json()
+            actual = datos["current"]
+            clima = Clima(actual["temperature_2m"], actual["relative_humidity_2m"], actual["wind_speed_10m"], actual["weather_code"])
+            return clima
+        except:
+            return None
