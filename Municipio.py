@@ -70,13 +70,44 @@ class Municipio:
         return (self.contarConCoordenadas() / total) * 100
 
     def localidadesConCoordenadas(self):
+        """
+        Arma la lista de las localidades del municipio que si tienen
+        coordenadas, que son las unicas que se pueden consultar en la API.
+
+        Returns:
+            list: Lista de objetos Localidad con coordenadas conocidas.
+        """
         disponibles = []
         for localidad in self.localidades:
             if localidad.tieneCoordenadas():
                 disponibles.append(localidad)
         return disponibles
 
+    def localidadesSinCoordenadas(self):
+        """
+        Arma la lista de las localidades del municipio que no tienen
+        coordenadas registradas, para el reporte de cobertura geografica.
+
+        Returns:
+            list: Lista de objetos Localidad sin coordenadas conocidas.
+        """
+        faltantes = []
+        for localidad in self.localidades:
+            if not localidad.tieneCoordenadas():
+                faltantes.append(localidad)
+        return faltantes
+
     def buscarPorNombre(self, texto):
+        """
+        Busca las localidades del municipio cuyo nombre contenga el texto
+        indicado, sin distinguir entre mayusculas y minusculas.
+
+        Args:
+            texto (str): Nombre o parte del nombre a buscar.
+
+        Returns:
+            list: Lista de objetos Localidad que coinciden con la busqueda.
+        """
         coincidencias = []
         texto = texto.lower()
         for localidad in self.localidades:

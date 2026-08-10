@@ -1,5 +1,27 @@
 class Clima:
+    """
+    Clase Clima que guarda los datos meteorologicos actuales de una localidad
+    obtenidos de la API de Open-Meteo, ya transformados en objeto.
+
+    Atributos:
+        temperatura (float): Temperatura actual en grados Celsius.
+        humedad (float): Humedad relativa en porcentaje.
+        viento (float): Velocidad del viento en km/h.
+        codigoTiempo (int): Codigo WMO del estado del tiempo.
+        estado (str): Descripcion en texto del estado del tiempo.
+    """
+
     def __init__(self, temperatura, humedad, viento, codigoTiempo):
+        """
+        Inicializa una instancia de la clase Clima y traduce el codigo del
+        estado del tiempo a su descripcion en texto.
+
+        Args:
+            temperatura (float): Temperatura actual en grados Celsius.
+            humedad (float): Humedad relativa en porcentaje.
+            viento (float): Velocidad del viento en km/h.
+            codigoTiempo (int): Codigo WMO del estado del tiempo.
+        """
         self.temperatura = temperatura
         self.humedad = humedad
         self.viento = viento

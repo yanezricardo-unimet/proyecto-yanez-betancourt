@@ -2,6 +2,17 @@ import requests
 from Clima import Clima
 
 class API:
+    """
+    Clase API que se encarga de toda la comunicacion con Open-Meteo: verifica
+    la conexion y consulta el clima actual. Las respuestas de la API (listas y
+    diccionarios) se transforman siempre en objetos propios del sistema antes
+    de devolverlas.
+
+    Atributos:
+        urlBase (str): URL del servicio de pronostico de Open-Meteo.
+        conectado (bool): Indica si la ultima verificacion de conexion fue exitosa.
+    """
+
     def __init__(self):
         """
         Inicializa una instancia de la clase API con la URL de Open-Meteo.
@@ -63,6 +74,7 @@ class API:
             datos = response.json()
             actual = datos["current"]
             clima = Clima(actual["temperature_2m"], actual["relative_humidity_2m"], actual["wind_speed_10m"], actual["weather_code"])
+            self.conectado = True
             return clima
         except:
             return None
