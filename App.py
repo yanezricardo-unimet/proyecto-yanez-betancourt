@@ -1,13 +1,16 @@
+from datetime import datetime, timedelta
+
 from GestorArchivos import GestorArchivos
 from API import API
 from Consulta import Consulta
 from Estadisticas import Estadisticas
+from Historico import Historico
 
 class App:
     """
     Clase App que controla toda la aplicacion MeteoCaracas: carga los datos del
-    archivo, muestra los menus, consulta el clima en tiempo real y lleva las
-    estadisticas de la sesion.
+    archivo, muestra los menus, consulta el clima en tiempo real, lleva las
+    estadisticas de la sesion y arma los reportes historicos.
 
     Atributos:
         gestorArchivos (GestorArchivos): Objeto que lee el archivo de zonas.
@@ -68,6 +71,44 @@ class App:
         if indice == -1:
             return None
         return lista[indice]
+
+    def pedirFecha(self, mensaje):
+        """
+        Pide al usuario una fecha en formato AAAA-MM-DD y valida que exista de
+        verdad. El 0 se usa para cancelar la operacion.
+
+        Args:
+            mensaje (str): Texto que se le muestra al usuario.
+
+        Returns:
+            datetime: Fecha ingresada, o None si el usuario cancela.
+        """
+        while True:
+            entrada = input(mensaje).strip()
+            if entrada == "0":
+                return None
+            try:
+                return datetime.strptime(entrada, "%Y-%m-%d")
+            except ValueError:
+                print("Fecha invalida. Use el formato AAAA-MM-DD (ejemplo: 2020-01-31).")
+
+    def confirmar(self, mensaje):
+        """
+        Le hace al usuario una pregunta de si o no y valida la respuesta.
+
+        Args:
+            mensaje (str): Pregunta que se le muestra al usuario.
+
+        Returns:
+            bool: True si el usuario responde que si.
+        """
+        while True:
+            respuesta = input(mensaje).strip().lower()
+            if respuesta == "s" or respuesta == "si":
+                return True
+            if respuesta == "n" or respuesta == "no":
+                return False
+            print("Respuesta invalida. Escriba S para si o N para no.")
 
     # ------------------------------------------------------------------
     # Seleccion de municipios y localidades
